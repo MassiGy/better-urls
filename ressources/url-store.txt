@@ -1,1 +1,2 @@
-https://better-urls.herokuapp.com/bootstrap-alerts--->https://getbootstrap.com/docs/5.1/components/alerts/
+https://better-urls.herokuapp.com/my-book--->https://example.com/usr/dfsj?book=1
+https://better-urls.herokuapp.com/bootstrap-starter--->https://getbootstrap.com/docs/5.1/getting-started/introduction/

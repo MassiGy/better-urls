@@ -3,14 +3,17 @@ const app = express();
 const ejs_mate = require("ejs-mate");
 const path = require('path');
 const fs = require("fs");
+const helmet = require("helmet");
 const port = process.env.PORT || 3000;
 
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(helmet());
 app.engine('ejs', ejs_mate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
 
 
 
