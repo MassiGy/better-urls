@@ -25,7 +25,7 @@
   "homepage": "https://github.com/MassiGy/better-urls#readme",
   "dependencies": {
     "ejs": "^3.1.6",
-    "ejs-mate": "^3.0.0",
+    "ejs-mate": "^4.0.0",
     "express": "^4.17.3",
     "helmet": "^5.0.2"
   }
