@@ -13,7 +13,8 @@ app.use(helmet());
 app.engine('ejs', ejs_mate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
+app.use('/assets', express.static('assets'));
+app.use('/images', express.static('images'));
 
 
 
@@ -22,9 +23,13 @@ app.get("/", (req, res) => {
     res.render("home");
 })
 
+app.get("/test", (req, res) => {
+    res.render("index");
+})
 
 
-app.get("/data", (req,res)=>{
+
+app.get("/data", (req, res) => {
     fs.readFile("./ressources/url-store.txt", "utf-8", (err, data) => {
         if (err) return res.status(500).send(err.message);
         res.status(200).send(`<code>${data.split("\n")}</code>`);

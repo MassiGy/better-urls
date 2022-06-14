@@ -1,2 +1,3 @@
 https://better-urls.herokuapp.com/my-book--->https://example.com/usr/dfsj?book=1
 https://better-urls.herokuapp.com/bootstrap-starter--->https://getbootstrap.com/docs/5.1/getting-started/introduction/
+https://better-urls.herokuapp.com/ytb-networking--->https://www.youtube.com/results?search_query=comment+se+creer+un+r%C3%A9seau+pro
