@@ -43,7 +43,7 @@ app.get("/:endpoint", (req, res) => {
         if (err) return res.status(500).send(err.message);
 
         // make sure that our file contains the requested end point
-        if (!data.includes(`https://better-urls.herokuapp.com/` + req.params.endpoint))
+        if (!data.includes(`localhost:3000/` + req.params.endpoint)) // https://better-urls.up.railway.app/
             return res.status(404).send("Url Not Found");
 
         // extract the key value pairs from a string stream into an array.
@@ -52,7 +52,7 @@ app.get("/:endpoint", (req, res) => {
 
         // find the index of the element that contains the requested url
         data_arr.forEach((el, i) => {
-            if (el.includes(`https://better-urls.herokuapp.com/${req.params.endpoint}`)) pos.push(i);
+            if (el.includes(`localhost:3000/${req.params.endpoint}`)) pos.push(i); // https://better-urls.up.railway.app
         })
 
         // once found, get the old_url 
@@ -69,8 +69,8 @@ app.get("/:endpoint", (req, res) => {
 app.post("/createUrl", (req, res) => {
 
     // verify if the new endpoint is valid.
-    if (!req.body.new_url.startsWith("https://better-urls.herokuapp.com/"))
-        return res.status(400).send("New url should start with https://better-urls.herokuapp.com/");
+    if (!req.body.new_url.startsWith("localhost:3000/")) // https://better-urls.up.railway.app/
+        return res.status(400).send("New url should start with localhost:3000/");
 
     // access our url store file
     fs.readFile("./ressources/url-store.txt", "utf-8", (err, data) => {
