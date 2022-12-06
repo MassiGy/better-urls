@@ -10,7 +10,9 @@ const api_routes = require("./routes/index");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(helmet());
+app.use(helmet({
+    contentSecurityPolicy: false
+}));
 app.engine('ejs', ejs_mate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
