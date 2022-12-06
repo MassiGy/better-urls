@@ -5,6 +5,18 @@ const path = require('path');
 const fs = require("fs");
 const helmet = require("helmet");
 const port = process.env.PORT || 3000;
+const { auth } = require('express-openid-connect');
+
+
+const config = {
+  authRequired: false,
+  auth0Logout: true,
+  secret: 'a long, randomly-generated string stored in env',
+  baseURL: 'http://localhost:3000',
+  clientID: 'LeYhHRPC7811jwbLhk5jkkSN6d5qUv10',
+  issuerBaseURL: 'https://better-urls.eu.auth0.com'
+};
+
 
 
 app.use(express.json());
@@ -15,6 +27,15 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use('/assets', express.static('assets'));
 app.use('/images', express.static('images'));
+
+
+// auth router attaches /login, /logout, and /callback routes to the baseURL
+app.use(auth(config));
+
+// req.isAuthenticated is provided from the auth router
+app.get('/auth', (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+});
 
 
 
