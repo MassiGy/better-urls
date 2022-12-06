@@ -1,99 +1,143 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <!--
 	Verti by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
+  <head>
+    <title>Verti by HTML5 UP</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+  </head>
 
-<head>
-  <title>Verti by HTML5 UP</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-  <link rel="stylesheet" href="/assets/css/main.css" />
-</head>
-
-<body class="is-preload homepage">
-  <div id="page-wrapper">
-
-    <!-- Header -->
-    <div id="header-wrapper">
-      <header id="header" class="container">
-
-        <!-- Logo -->
-        <div id="logo">
-          <h1><a href="/">Better Urls</a></h1>
-          <span> by Massiles Ghernaout</span>
-        </div>
-
-        <!-- Nav -->
-        <nav id="nav">
-          <ul>
-
-
-            <li><a href="https://www.linkedin.com/in/massigy/">Linkedin</a></li>
-            <li><a href="https://github.com/MassiGy">Github</a></li>
-          </ul>
-        </nav>
-
-      </header>
-    </div>
-
-    <!-- Banner -->
-    <div id="banner-wrapper">
-      <div id="banner" class="box container">
-        <p>Create Your Own Simplefied Urls</p>
-        <div class="row">
-          <div class="col-7 col-12-medium ">
-            <br>
-
-            <form action="/createUrl" method="POST" class="my-5">
-              <div class="row">
-                <div class="col-3 col-5-medium ">
-                  <h3 style="margin-top: .4rem;">Old url :</h3>
-                </div>
-                <div class="col-9 col-7-medium ">
-                  <input class="form-control mt-2 mb-5" name="old_url" type="text" placeholder="https://example.com/usr/dfsj?book=1" required>
-                </div>
-              </div>
-              <br>
-              <div class="row">
-                <div class="col-3 col-5-medium ">
-                  <h3 style="margin-top: .4rem;">New url :</h3>
-                </div>
-                <div class="col-9 col-7-medium ">
-                  <input class="form-control mt-2 mb-5" name="new_url" type="text"  value="localhost:3000/" required>
-                </div>
-              </div>
-              <br>
-              <input class="button margin fa-arrow-circle-right" type="submit" value="Create">
-
-            </form>
+  <body class="is-preload homepage">
+    <div id="page-wrapper">
+      <!-- Header -->
+      <div id="header-wrapper">
+        <header id="header" class="container">
+          <!-- Logo -->
+          <div id="logo">
+            <h1><a href="/">Better Urls</a></h1>
+            <span> by Massiles Ghernaout</span>
           </div>
-          <div class="col-5 col-12-medium">
+
+          <!-- Nav -->
+          <nav id="nav">
             <ul>
-              
-              <li><a href="/login" class="button large icon solid fa-arrow-circle-right">Login</a></li>
-              <li><a href="/signup" class="button large icon solid fa-arrow-circle-right">Sign up</a></li>
-              <li><a href="/download" class="button alt large icon fa-file-alt">Download Urls</a></li>
+              <div
+                id="g_id_onload"
+                data-client_id="238409132212-ivjragegp9o4ri8id7clgk3te9q5sk76.apps.googleusercontent.com"
+                data-context="signin"
+                data-ux_mode="popup"
+                data-login_uri="http://localhost:3000/login"
+                data-auto_select="true"
+                data-itp_support="true"
+              ></div>
+
+              <div
+                class="g_id_signin"
+                data-type="standard"
+                data-shape="rectangular"
+                data-theme="outline"
+                data-text="signin_with"
+                data-size="large"
+                data-logo_alignment="left"
+              ></div>
+              <li>
+                <a href="https://www.linkedin.com/in/massigy/">Linkedin</a>
+              </li>
+              <li><a href="https://github.com/MassiGy">Github</a></li>
             </ul>
+          </nav>
+        </header>
+      </div>
+
+      <!-- Banner -->
+      <div id="banner-wrapper">
+        <div id="banner" class="box container">
+          <p>Create Your Own Simplefied Urls</p>
+          <div class="row">
+            <div class="col-7 col-12-medium">
+              <br />
+
+              <form action="/createUrl" method="POST" class="my-5">
+                <div class="row">
+                  <div class="col-3 col-5-medium">
+                    <h3 style="margin-top: 0.4rem">Old url :</h3>
+                  </div>
+                  <div class="col-9 col-7-medium">
+                    <input
+                      class="form-control mt-2 mb-5"
+                      name="old_url"
+                      type="text"
+                      placeholder="https://example.com/usr/dfsj?book=1"
+                      required
+                    />
+                  </div>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col-3 col-5-medium">
+                    <h3 style="margin-top: 0.4rem">New url :</h3>
+                  </div>
+                  <div class="col-9 col-7-medium">
+                    <input
+                      class="form-control mt-2 mb-5"
+                      name="new_url"
+                      type="text"
+                      value="localhost:3000/"
+                      required
+                    />
+                  </div>
+                </div>
+                <br />
+                <input
+                  class="button margin fa-arrow-circle-right"
+                  type="submit"
+                  value="Create"
+                />
+              </form>
+            </div>
+            <div class="col-5 col-12-medium">
+              <ul>
+                <li>
+                  <a
+                    href="/login"
+                    class="button large icon solid fa-arrow-circle-right"
+                    >Login</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="/signup"
+                    class="button large icon solid fa-arrow-circle-right"
+                    >Sign up</a
+                  >
+                </li>
+                <li>
+                  <a href="/download" class="button alt large icon fa-file-alt"
+                    >Download Urls</a
+                  >
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-
-  </div>
-
-  <!-- Scripts -->
-
-  <script src="/assets/js/jquery.min.js"></script>
-  <script src="/assets/js/jquery.dropotron.min.js"></script>
-  <script src="/assets/js/browser.min.js"></script>
-  <script src="/assets/js/breakpoints.min.js"></script>
-  <script src="/assets/js/util.js"></script>
-  <script src="/assets/js/main.js"></script>
-
-</body>
-
+    <!-- Scripts -->
+    <script src="https://accounts.google.com/gsi/client" defer></script>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/jquery.dropotron.min.js"></script>
+    <script src="/assets/js/browser.min.js"></script>
+    <script src="/assets/js/breakpoints.min.js"></script>
+    <script src="/assets/js/util.js"></script>
+    <script src="/assets/js/main.js"></script>
+  </body>
 </html>
