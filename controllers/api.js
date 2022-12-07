@@ -65,26 +65,41 @@ module.exports.create_user_url = (req, res) => {
     if (!req.body.new_url.startsWith("localhost:3000/")) // https://better-urls.up.railway.app/
         return res.status(400).send("New url should start with localhost:3000/");
 
+    // get the user data from the req cookies
+    const user_data = req.cookies["user-cookie"];
+
+    if (is_google_credentials_valid(user_data) != true)
+        return res.status(401).send("Please login with the Google bouton again.");
+
+
+
 
     // access our url store file
-    fs.readFile("./ressources/url-store.txt", "utf-8", (err, data) => {
-        if (err) return res.status(500).send(err.message);
+    fs.readFile(
+        `./ressources/${user_data.given_name}-${user_data.family_name}-${user_data.email}-url-store.txt`,
+        "utf-8",
+        (err, data) => {
 
-        // make sure the newly created endpoint does not exist yet.
-        if (data.includes(req.body.old_url) || data.includes(req.body.new_url))
-            return res.status(400).send("Url Already Taken.");
-
-        // create a new key value pair record
-        const newRecord = `${req.body.new_url}--->${req.body.old_url}\n`;
-
-        // append the record to the file
-        fs.appendFile("./ressources/url-store.txt", newRecord, (err) => {
             if (err) return res.status(500).send(err.message);
-        })
 
-        // send back the record to the user
-        res.status(200).send(`<code>${newRecord}</code>`);
-    })
+            // make sure the newly created endpoint does not exist yet.
+            if (data.includes(req.body.old_url) || data.includes(req.body.new_url))
+                return res.status(400).send("Url Already Taken.");
+
+            // create a new key value pair record
+            const newRecord = `${req.body.new_url}--->${req.body.old_url}\n`;
+
+            // append the record to the file
+            fs.appendFile(
+                `./ressources/${user_data.given_name}-${user_data.family_name}-${user_data.email}-url-store.txt`,
+                newRecord,
+                (err) => {
+                    if (err) return res.status(500).send(err.message);
+                })
+
+            // send back the record to the user
+            res.status(200).send(`<code>${newRecord}</code>`);
+        })
 };
 
 
@@ -100,6 +115,18 @@ module.exports.login = async (req, res) => {
     // verify that the data are valid
     if (is_google_credentials_valid(user_data) != true)
         return res.status(401).send("Please check your Google account data then try again.");
+
+
+
+    // create a file in the ressource dir for the user
+    fs.appendFile(
+        `./ressources/${user_data.given_name}-${user_data.family_name}-${user_data.email}-url-store.txt`,
+        "\n",
+        (err) => {
+            if (err) return res.status(500).send(err.message);
+        }
+    )
+
 
 
     // set a cookie
