@@ -14,10 +14,21 @@ module.exports.render_test_page = (req, res) => {
 
 
 module.exports.get_user_urls = (req, res) => {
-    fs.readFile("./ressources/url-store.txt", "utf-8", (err, data) => {
-        if (err) return res.status(500).send(err.message);
-        res.status(200).send(`<code>${data.split("\n")}</code>`);
-    })
+    // first access the user data inside the up coming cookie
+    let user_data = req.cookies["user-cookie"];
+
+    if (is_google_credentials_valid(user_data) != true)
+        return res.status(401).send("Please login with the Google bouton again.");
+
+
+
+    fs.readFile(
+        `./ressources/${user_data.given_name}-${user_data.family_name}-${user_data.email}-url-store.txt`,
+        "utf-8",
+        (err, data) => {
+            if (err) return res.status(500).send(err.message);
+            res.status(200).send(`<code>${data.split("\n")}</code>`);
+        })
 };
 
 
@@ -84,8 +95,8 @@ module.exports.create_user_url = (req, res) => {
 
 
     // verify if the new endpoint is valid.
-    if (!req.body.new_url.startsWith("localhost:3000/")) // https://better-urls.up.railway.app/
-        return res.status(400).send("New url should start with localhost:3000/");
+    if (!req.body.new_url.startsWith("https://better-urls.up.railway.app/")) // https://better-urls.up.railway.app/
+        return res.status(400).send("New url should start with https://better-urls.up.railway.app/");
 
     // get the user data from the req cookies
     const user_data = req.cookies["user-cookie"];
