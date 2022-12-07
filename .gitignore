@@ -1,5 +1,6 @@
 node_modules
 ./assets/sass
+./.env
 .env
-todo.txt
+./todo.txt
 ./ressources/*
