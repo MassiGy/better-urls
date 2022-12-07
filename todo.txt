@@ -1,1 +1,2 @@
-- create a system to force the user to loggin before creating urls. I already tried to send messages, consider using req.flash
+[X] create a system to force the user to loggin before creating urls. I already tried to send messages, consider using req.flash
+[]  create a system to exploit the google data of the user, so as every user has a diffrent experience using the app. Consider adding the email of the user to the file
