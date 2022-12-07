@@ -1,9 +1,10 @@
+const jwt = require("jsonwebtoken");
 const fs = require("fs");
-
+const { is_google_credentials_valid } = require("../helpers/verify_google_credentials");
 
 
 module.exports.render_home_page = (req, res) => {
-    res.render("index");
+    res.render("index", { flash_messages: res.locals["flash-messages"] });
 };
 
 
@@ -21,14 +22,13 @@ module.exports.get_user_urls = (req, res) => {
 
 
 
-module.exports.download_user_urls =  (req, res) => {
+module.exports.download_user_urls = (req, res) => {
     res.download("./ressources/url-store.txt", (err) => {
-        console.log(err.message);
-        res.status(500).send("File couldn't be downloaded [INTERNAL SERVER ERROR]");
+        if (err) return res.status(500).send("File couldn't be downloaded [INTERNAL SERVER ERROR]");
     });
 };
 
-module.exports.visit_user_urls =  (req, res) => {
+module.exports.visit_user_urls = (req, res) => {
     // access our url key value pair store
     fs.readFile("./ressources/url-store.txt", "utf-8", (err, data) => {
         if (err) return res.status(500).send(err.message);
@@ -85,6 +85,26 @@ module.exports.create_user_url = (req, res) => {
         // send back the record to the user
         res.status(200).send(`<code>${newRecord}</code>`);
     })
-
-
 };
+
+
+
+
+module.exports.login = async (req, res) => {
+    // first, get the credentials from req body
+    let { credential } = req.body;
+
+    // then, decode the json web token and extract the user profile,
+    let user_data = jwt.decode(credential); // no need to verify since it can only be signed by google
+
+    // verify that the data are valid
+    if (is_google_credentials_valid(user_data) != true)
+        return res.status(401).send("Please check your Google account data then try again.");
+
+
+    // set a cookie
+    res.cookie("user-cookie", user_data, { path: '/' });
+
+    // redirect back to the home page
+    res.redirect("/");
+}

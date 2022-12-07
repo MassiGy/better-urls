@@ -1,0 +1,1 @@
+- create a system to force the user to loggin before creating urls. I already tried to send messages, consider using req.flash
