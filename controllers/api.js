@@ -23,9 +23,19 @@ module.exports.get_user_urls = (req, res) => {
 
 
 module.exports.download_user_urls = (req, res) => {
-    res.download("./ressources/url-store.txt", (err) => {
-        if (err) return res.status(500).send("File couldn't be downloaded [INTERNAL SERVER ERROR]");
-    });
+
+    // first access the user data inside the up coming cookie
+    let user_data = req.cookies["user-cookie"];
+
+    if (is_google_credentials_valid(user_data) != true)
+        return res.status(401).send("Please login with the Google bouton again.");
+
+
+    return res.download(
+        `./ressources/${user_data.given_name}-${user_data.family_name}-${user_data.email}-url-store.txt`
+        , (err) => {
+            if (err) return res.status(500).send("File couldn't be downloaded [INTERNAL SERVER ERROR]");
+        });
 };
 
 module.exports.visit_user_urls = (req, res) => {
@@ -130,7 +140,7 @@ module.exports.login = async (req, res) => {
 
 
 
-    // create a file in the ressource dir for the user
+    // create a file in the ressource dir for the user if not exist, otherwise just append a new line
     fs.appendFile(
         `./ressources/${user_data.given_name}-${user_data.family_name}-${user_data.email}-url-store.txt`,
         "\n",
