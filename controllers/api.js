@@ -17,10 +17,10 @@ module.exports.get_user_urls = (req, res) => {
     // first access the user data inside the up coming cookie
     let user_data = req.cookies["user-cookie"];
 
-    if (is_google_credentials_valid(user_data) != true)
+    if (is_google_credentials_valid(user_data) != true) {
         return res.status(401).send("Please login with the Google bouton again.");
 
-
+    }
 
     fs.readFile(
         `./ressources/${user_data.given_name}-${user_data.family_name}-${user_data.email}-url-store.txt`,
@@ -38,14 +38,16 @@ module.exports.download_user_urls = (req, res) => {
     // first access the user data inside the up coming cookie
     let user_data = req.cookies["user-cookie"];
 
-    if (is_google_credentials_valid(user_data) != true)
+    if (is_google_credentials_valid(user_data) != true) {
         return res.status(401).send("Please login with the Google bouton again.");
-
+    }
 
     return res.download(
         `./ressources/${user_data.given_name}-${user_data.family_name}-${user_data.email}-url-store.txt`
         , (err) => {
-            if (err) return res.status(500).send("File couldn't be downloaded [INTERNAL SERVER ERROR]");
+            if (err) {
+                return res.status(500).send("File couldn't be downloaded [INTERNAL SERVER ERROR]");
+            }
         });
 };
 
@@ -54,21 +56,23 @@ module.exports.visit_user_urls = (req, res) => {
     // first access the user data inside the up coming cookie
     let user_data = req.cookies["user-cookie"];
 
-    if (is_google_credentials_valid(user_data) != true)
+    if (is_google_credentials_valid(user_data) != true) {
         return res.status(401).send("Please login with the Google bouton again.");
 
-
+    }
 
     // access our url key value pair store
     fs.readFile(
         `./ressources/${user_data.given_name}-${user_data.family_name}-${user_data.email}-url-store.txt`,
         "utf-8",
         (err, data) => {
-            if (err) return res.status(500).send(err.message);
-
+            if (err) {
+                return res.status(500).send(err.message);
+            }
             // make sure that our file contains the requested end point
-            if (!data.includes(req.params.endpoint)) // https://better-urls.up.railway.app/
+            if (!data.includes(req.params.endpoint)) {
                 return res.status(404).send("Url Not Found");
+            }
 
             // extract the key value pairs from a string stream into an array.
             const data_arr = data.split("\n");
@@ -90,20 +94,21 @@ module.exports.visit_user_urls = (req, res) => {
 module.exports.create_user_url = (req, res) => {
 
     // verify if old endpoint is valid
-    if (!req.body.old_url.startsWith("https://"))
+    if (!req.body.old_url.startsWith("https://")) {
         return res.status(400).send("Old url should start with https://");
+    }
 
 
     // verify if the new endpoint is valid.
-    if (!req.body.new_url.startsWith("https://better-urls.up.railway.app/")) // https://better-urls.up.railway.app/
+    if (!req.body.new_url.startsWith("https://better-urls.up.railway.app/")) {
         return res.status(400).send("New url should start with https://better-urls.up.railway.app/");
-
+    }
     // get the user data from the req cookies
     const user_data = req.cookies["user-cookie"];
 
-    if (is_google_credentials_valid(user_data) != true)
+    if (is_google_credentials_valid(user_data) != true) {
         return res.status(401).send("Please login with the Google bouton again.");
-
+    }
 
 
 
@@ -113,11 +118,12 @@ module.exports.create_user_url = (req, res) => {
         "utf-8",
         (err, data) => {
 
-            if (err) return res.status(500).send(err.message);
+            if (err) { return res.status(500).send(err.message); }
 
             // make sure the newly created endpoint does not exist yet.
-            if (data.includes(req.body.old_url) || data.includes(req.body.new_url))
+            if (data.includes(req.body.old_url) || data.includes(req.body.new_url)) {
                 return res.status(400).send("Url Already Taken.");
+            }
 
             // create a new key value pair record
             const newRecord = `${req.body.new_url}--->${req.body.old_url}\n`;
@@ -127,7 +133,7 @@ module.exports.create_user_url = (req, res) => {
                 `./ressources/${user_data.given_name}-${user_data.family_name}-${user_data.email}-url-store.txt`,
                 newRecord,
                 (err) => {
-                    if (err) return res.status(500).send(err.message);
+                    if (err) { return res.status(500).send(err.message) };
                 })
 
             // send back the record to the user
@@ -156,7 +162,7 @@ module.exports.login = async (req, res) => {
         `./ressources/${user_data.given_name}-${user_data.family_name}-${user_data.email}-url-store.txt`,
         "\n",
         (err) => {
-            if (err) return res.status(500).send(err.message);
+            if (err) { return res.status(500).send(err.message) };
         }
     )
 
