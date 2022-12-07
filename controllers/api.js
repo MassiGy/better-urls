@@ -29,27 +29,39 @@ module.exports.download_user_urls = (req, res) => {
 };
 
 module.exports.visit_user_urls = (req, res) => {
+
+    // first access the user data inside the up coming cookie
+    let user_data = req.cookies["user-cookie"];
+
+    if (is_google_credentials_valid(user_data) != true)
+        return res.status(401).send("Please login with the Google bouton again.");
+
+
+
     // access our url key value pair store
-    fs.readFile("./ressources/url-store.txt", "utf-8", (err, data) => {
-        if (err) return res.status(500).send(err.message);
+    fs.readFile(
+        `./ressources/${user_data.given_name}-${user_data.family_name}-${user_data.email}-url-store.txt`,
+        "utf-8",
+        (err, data) => {
+            if (err) return res.status(500).send(err.message);
 
-        // make sure that our file contains the requested end point
-        if (!data.includes(req.params.endpoint)) // https://better-urls.up.railway.app/
-            return res.status(404).send("Url Not Found");
+            // make sure that our file contains the requested end point
+            if (!data.includes(req.params.endpoint)) // https://better-urls.up.railway.app/
+                return res.status(404).send("Url Not Found");
 
-        // extract the key value pairs from a string stream into an array.
-        const data_arr = data.split("\n");
+            // extract the key value pairs from a string stream into an array.
+            const data_arr = data.split("\n");
 
-        // find the element that contains the requested url
-        let found_record = data_arr.find(el => el.includes(`${req.params.endpoint}`)) // https://better-urls.up.railway.app
+            // find the element that contains the requested url
+            let found_record = data_arr.find(el => el.includes(`${req.params.endpoint}`)) // https://better-urls.up.railway.app
 
-        // once found, get the old_url 
-        old_url = found_record.split("--->")[1];
+            // once found, get the old_url 
+            old_url = found_record.split("--->")[1];
 
-        // redirect the user to the old url.
+            // redirect the user to the old url.
 
-        res.redirect(old_url);
-    })
+            res.redirect(old_url);
+        })
 };
 
 
