@@ -14,10 +14,18 @@ const port = process.env.PORT || 3000;
 const api_routes = require("./routes/index");
 const session_options = {
     saveUninitialized: false,
-    resave: true,
-    httpOnly: true,
+    resave: false,
     secret: process.env.SESSION_SECRET,
     name: "session-expressjs",
+
+    // since we are using local store (which is the server ram)
+    // we better set an experation date on the cookies
+    // and also the resave option to false
+    cookie: {
+        httpOnly: true,
+        sameSite: true,
+        expires: 7 * 24 * 60 * 60 * 1000,
+    }
 }
 
 
