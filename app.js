@@ -11,6 +11,7 @@ const sessions = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require("req-flash");
 
+// only use the ports or the domains that are allowed in the google clould plateform (either 3000 or 5000 for me)
 const port = process.env.PORT || 5000;
 const api_routes = require("./routes/index");
 
