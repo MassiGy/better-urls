@@ -8,24 +8,28 @@ const ejs_mate = require("ejs-mate");
 const path = require('path');
 const cookieParser = require("cookie-parser");
 const sessions = require("express-session");
+const MongoStore = require("connect-mongo");
 const flash = require("req-flash");
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 const api_routes = require("./routes/index");
+
+
 const session_options = {
     saveUninitialized: false,
     resave: false,
-    secret: process.env.SESSION_SECRET,
-    name: "session-expressjs",
+    secret: String(process.env.SESSION_SECRET),
+    name: "session",
 
-    // since we are using local store (which is the server ram)
-    // we better set an experation date on the cookies
-    // and also the resave option to false
     cookie: {
-        httpOnly: true,
-        sameSite: true,
-        expires: 7 * 24 * 60 * 60 * 1000,
-    }
+        httpOnly: process.NODE_ENV == "production",
+        secure: process.NODE_ENV == "production",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+    },
+    store: MongoStore.create({
+        mongoUrl: String(process.env.MONGO_ATLAS_URL),
+        touchAfter: 7 * 24 * 60 * 60, // set touchAfter  = to cookies maxAge
+    })
 }
 
 
