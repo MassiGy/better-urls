@@ -1661,7 +1661,7 @@ input, select, textarea {
 		input[type="reset"]:hover,
 		button:hover,
 		.button:hover {
-			background: #10a0d5;
+			background: #9DB2BF;
 		}
 
 		input[type="button"]:active,
@@ -1938,7 +1938,7 @@ input, select, textarea {
 	}
 
 		#logo h1 {
-			background: #ff4486;
+			background: #545B77;
 			color: #fff;
 			border-radius: 6px;
 			font-family: 'Oleo Script', serif;
