@@ -7,7 +7,6 @@
 
 - [Better urls api is online on railway.](https://better-urls.up.railway.app/)
 
-
 <br>
 
 ---
