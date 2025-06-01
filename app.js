@@ -43,6 +43,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use('/assets', express.static('assets'));
 app.use('/images', express.static('images'));
+app.use(express.static('public'));
 app.use(sessions(session_options));
 app.use(cookieParser());
 app.use(flash({ locals: "flash-messages" })); // make flash messages availible in the res object
